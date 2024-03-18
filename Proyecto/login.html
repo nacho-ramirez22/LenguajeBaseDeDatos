@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesion</title>
+    <link rel="stylesheet" href="css/stylesIndex.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="js/validarLogin.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand">
+            <img src="img/logo2.png" class="logo" alt="Logo" />
+          </a>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <form method="POST" id="formLogin" action="login.php">
+                <h3 class="text-center">INICIO DE SESION</h3>
+                <label>Usuario:</label><br />
+                <input
+                  type="text"
+                  name="username"
+                  id="Username"
+                  class="form-control"
+                /><br />
+                <label>Contraseña:</label><br />
+                <input
+                  type="password"
+                  name="password"
+                  id="Password"
+                  class="form-control"
+                /><br />
+                <div class="d-flex justify-content-between">
+                  <input
+                    type="submit"
+                    class="btn btn-primary"
+                    value="Iniciar sesión"
+                  />
+                  <input
+                    type="button"
+                    class="btn btn-danger"
+                    value="Registrarse"
+                    onclick="redirectRegistro()"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <footer class="bg-secondary text-white text-center p-3">
+      <p>TOURS - 2024</p>
+    </footer>
+    <script>
+      function redirectRegistro() {
+        window.location.href = "registro.html";
+      }
+    </script>
+  </body>
+</html>
