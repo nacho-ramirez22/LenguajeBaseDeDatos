@@ -613,7 +613,8 @@ END;
 
 
 
-----------------------------------
+----------------------------------REVISAR
+
 --FUNCIONES
 --1 Precio Maximo PAQUETES
 CREATE OR REPLACE FUNCTION PRECIO_MAXIMO RETURN INT IS
@@ -758,6 +759,9 @@ DBMS_OUTPUT.PUT_LINE ('Error al calcular el monto gastado:' || SQLERRM);
 RETURN NULL;
 END TOTAL_GASTADO;
 
+-------------------------------------------------------------------------
+
+
 
 --VISTAS
 CREATE OR REPLACE VIEW vista_usuario AS SELECT id_usuario, nombre, apellido, telefono, username from Usuario;
@@ -781,3 +785,50 @@ CREATE OR REPLACE VIEW vista_factura AS SELECT f.id_factura, u.nombre|| ' ' ||u.
 usuario u ON u.ID_Usuario = f.ID_Usuario JOIN paquetes p ON p.ID_Paquete = f.ID_Paquete;
 
 CREATE OR REPLACE VIEW vista_rol AS SELECT id_rol, rol FROM rol;
+
+
+--------------------------------------
+
+--TRIGGERS
+
+CREATE OR REPLACE TRIGGER tr_paquete_insert
+AFTER INSERT ON paquetes
+FOR EACH ROW
+DECLARE
+    operacion VARCHAR2(10);
+BEGIN
+    operacion := 'INSERT';
+    INSERT INTO AuditoriaPaquetes (Tipo_Operacion, Fecha_Operacion, ID_Paquete, ID_Provincia, 
+                                ID_Menu, ID_Tour, ID_Actividad, ID_ls, Destino, Fecha, Precio)
+    VALUES (operacion, SYSTIMESTAMP, :NEW.ID_Paquete, :NEW.ID_Provincia, 
+            :NEW.ID_Menu, :NEW.ID_Tour,:NEW.ID_Actividad, :NEW.ID_ls, :NEW.Destino, :NEW.Fecha, :NEW.Precio);
+END;
+-- Trigger TR_PAQUETE_INSERT compilado
+
+CREATE OR REPLACE TRIGGER tr_paquete_update
+AFTER UPDATE ON paquetes
+FOR EACH ROW
+DECLARE
+    operacion VARCHAR2(10);
+BEGIN
+    operacion := 'UPDATE';
+    INSERT INTO AuditoriaPaquetes (Tipo_Operacion, Fecha_Operacion, ID_Paquete, ID_Provincia, 
+                                    ID_Menu, ID_Tour, ID_Actividad, ID_ls, Destino, Fecha, Precio)
+    VALUES (operacion, SYSTIMESTAMP, :OLD.ID_Paquete, :OLD.ID_Provincia, 
+            :OLD.ID_Menu, :OLD.ID_Tour, :OLD.ID_Actividad, :OLD.ID_ls, :OLD.Destino, :OLD.Fecha, :OLD.Precio);
+END;
+-- Trigger TR_PAQUETE_UPDATE compilado
+
+CREATE OR REPLACE TRIGGER tr_paquete_delete
+AFTER DELETE ON paquetes
+FOR EACH ROW
+DECLARE
+    operacion VARCHAR2(10);
+BEGIN
+    operacion := 'DELETE';
+    INSERT INTO AuditoriaPaquetes (Tipo_Operacion, Fecha_Operacion, ID_Paquete, ID_Provincia, 
+                                    ID_Menu, ID_Tour, ID_Actividad, ID_ls, Destino, Fecha, Precio)
+    VALUES (operacion, SYSTIMESTAMP, :OLD.ID_Paquete, :OLD.ID_Provincia, 
+            :OLD.ID_Menu, :OLD.ID_Tour, :OLD.ID_Actividad, :OLD.ID_ls, :OLD.Destino, :OLD.Fecha, :OLD.Precio);
+END;
+-- Trigger TR_PAQUETE_DELETE compilado

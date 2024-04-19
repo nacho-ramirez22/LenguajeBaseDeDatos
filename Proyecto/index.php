@@ -4,10 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
+    <title>Paquetes</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
+    <style>
+        .image-container {
+            position: relative;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .caption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,50 +47,53 @@
                             <a class="nav-link active" href="index.php">Página principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="tour.php">Tour</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="actividades.php">Actividades</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="menu.php">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="provincia.php">Provincia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="paquete.php">Paquete</a>
+                            <a class="nav-link " href="paquete.php">Paquete</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="comentario.php">Comentarios</a>
                         </li>
                         <?php
                         session_start();
-                        if (isset($_SESSION['usuario'])) {
-                            $usuario_actual = $_SESSION['usuario'];
-                            echo '<li class="nav-item">';
-                            echo '<a class="nav-link">Usuario: ' . $usuario_actual . '</a>';
-                            echo '</li>';
-                            echo '<li class="nav-item">';
-                            echo '<form class="d-flex" action="cerrarSesion.php" method="post">';
-                            echo '<button class="btn btn-outline-light" type="submit">Cerrar sesión</button>';
+                        if (isset($_SESSION['username'])) {
+                            if ($_SESSION['id_rol'] == 2) {
+                                echo
+                                '
+                                <li class="nav-item">
+                                    <a class="nav-link " href="tour.php">Tour</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="actividades.php">Actividades</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="menu.php">Menu</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="provincia.php">Provincia</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="auditoria.php">Auditorias</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="facturas.php">Facturas</a>
+                                </li>';
+                            }
+                            echo '<div class="d-flex align-items-center">';
+                            echo '<p class="text-white mb-0"><strong>' . $_SESSION['username'] . '</strong></p>';
+                            echo '<form action="logout.php" method="POST">';
+                            echo '<button type="submit" class="btn btn-danger mx-2">Cerrar sesión</button>';
                             echo '</form>';
-                            echo '</li>';
+                            echo '</div>';
                         }
                         ?>
-                    </ul>
                 </div>
-            </div>
         </nav>
     </header>
-    <br><br>
-    <div class="row">
-
-
+    <div class="image-container">
+        <img src="img/senderismo.png" class="d-block w-100" alt="Imagen 1">
+        <div class="caption">
+            <h2>¡BIENVENIDO A MOCHILEANDO CR!</h2>
+        </div>
     </div>
+
     <footer class="bg-secondary text-white text-center p-3">
         <p>TOURS - 2024</p>
     </footer>

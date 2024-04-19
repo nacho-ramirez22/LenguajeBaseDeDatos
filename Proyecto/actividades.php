@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividades</title>
+    <title>Paquetes</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -26,7 +26,13 @@
                             <a class="nav-link " href="index.php">Página principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Tour.php">Tour</a>
+                            <a class="nav-link" href="paquete.php">Paquete</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="comentario.php">Comentarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tour.php">Tour</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="actividades.php">Actividades</a>
@@ -41,13 +47,24 @@
                             <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="paquete.php">Paquete</a>
+                            <a class="nav-link" href="auditoria.php">Auditorias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="comentario.php">Comentarios</a>
+                            <a class="nav-link " href="facturas.php">Facturas</a>
                         </li>
                     </ul>
                 </div>
+                <?php
+                session_start();
+                if (isset($_SESSION['username'])) {
+                    echo '<div class="d-flex align-items-center">';
+                    echo '<p class="text-white mb-0"><strong>' . $_SESSION['username'] . '</strong></p>';
+                    echo '<form action="logout.php" method="POST">';
+                    echo '<button type="submit" class="btn btn-danger mx-2">Cerrar sesión</button>';
+                    echo '</form>';
+                    echo '</div>';
+                }
+                ?>
             </div>
         </nav>
     </header>

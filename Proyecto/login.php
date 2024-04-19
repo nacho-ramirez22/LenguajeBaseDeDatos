@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 
 if (!$conn) {
@@ -17,6 +19,9 @@ oci_bind_by_name($statement, ":password", $password);
 oci_execute($statement);
 
 if ($row = oci_fetch_assoc($statement)) {
+    $_SESSION['username'] = $username;
+    $_SESSION['id_usuario'] = $row['ID_USUARIO'];
+    $_SESSION['id_rol'] = $row['ID_ROL'];
     header("Location: index.php");
     exit;
 } else {
@@ -26,4 +31,3 @@ if ($row = oci_fetch_assoc($statement)) {
 
 oci_free_statement($statement);
 oci_close($conn);
-?>

@@ -41,7 +41,7 @@
                             <a class="nav-link" href="menu.php">Menu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="provincia.php">Provincia</a>
+                            <a class="nav-link" href="provincia.php">Provincia</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a>
@@ -50,7 +50,7 @@
                             <a class="nav-link" href="auditoria.php">Auditorias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="facturas.php">Facturas</a>
+                            <a class="nav-link active" href="facturas.php">Facturas</a>
                         </li>
                     </ul>
                 </div>
@@ -78,34 +78,24 @@
             exit;
         }
 
-        $query = 'SELECT * FROM vista_provincia';
+        $query = 'SELECT * FROM vista_factura';
 
         $statement = oci_parse($conn, $query);
 
         oci_execute($statement);
 
-        echo "<h2>PROVINCIAS:</h2>";
+        echo "<h2>FACTURAS:</h2>";
         echo "<ul class='list-group'>";
         while ($row = oci_fetch_assoc($statement)) {
-            echo "<li class='list-group-item'>" . $row['PROVINCIA'] . " <a href='eliminar_provincia.php?id=" . $row['ID_PROVINCIA'] . "' class='btn btn-danger btn-sm'>Eliminar</a>  <a href='editar_provincia.php?id=" . $row['ID_PROVINCIA'] . "' class='btn btn-secondary btn-sm'>Editar</a></li>";
+            echo "<li class='list-group-item'>
+              <strong>ID FACTURA:</strong> " . $row['ID_FACTURA'] . " <strong>NOMBRE:</strong> " . $row['NOMBRE'] . " <strong>DESTINO:</strong> " . $row['DESTINO'] . " 
+              <strong>FECHA:</strong> " . $row['FECHA'] . " <strong>PRECIO:</strong> " . $row['PRECIO'] . "</li>";
         }
         echo "</ul>";
 
         oci_free_statement($statement);
         oci_close($conn);
         ?>
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2>Agregar Provincia</h2>
-                <form action="agregar_provincia.php" method="POST">
-                    <div class="form-group">
-                        <label for="tipo">Nueva Provincia:</label>
-                        <input type="text" class="form-control" id="provincia" name="provincia" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar Provincia</button>
-                </form>
-            </div>
-        </div>
     </div>
     <footer class="bg-secondary text-white text-center p-3">
         <p>TOURS - 2024</p>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tour</title>
+    <title>Paquetes</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -26,29 +26,44 @@
                             <a class="nav-link " href="index.php">Página principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="tour.php">Tour</a>
+                            <a class="nav-link " href="paquete.php">Paquete</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="actividades.php">Actividades</a>
+                            <a class="nav-link active" href="comentario.php">Comentarios</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="menu.php">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="provincia.php">Provincia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="paquete.php">Paquete</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="comentario.php">Comentarios</a>
-                        </li>
-                    </ul>
+                        <?php
+                        session_start();
+                        if (isset($_SESSION['username'])) {
+                            if ($_SESSION['id_rol'] == 2) {
+                                echo
+                                '
+                                <li class="nav-item">
+                                    <a class="nav-link " href="tour.php">Tour</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="actividades.php">Actividades</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="menu.php">Menu</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="provincia.php">Provincia</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="lugarSalida.php">Lugar de Salida</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="auditoria.php">Auditorias</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="facturas.php">Facturas</a>
+                                </li>';
+                            }
+                            echo '<div class="d-flex align-items-center">';
+                            echo '<p class="text-white mb-0"><strong>' . $_SESSION['username'] . '</strong></p>';
+                            echo '<form action="logout.php" method="POST">';
+                            echo '<button type="submit" class="btn btn-danger mx-2">Cerrar sesión</button>';
+                            echo '</form>';
+                            echo '</div>';
+                        }
+                        ?>
                 </div>
-            </div>
         </nav>
     </header>
     <div class="container mt-5">
@@ -72,10 +87,12 @@
         while ($row = oci_fetch_assoc($statement)) {
             echo "<li class='list-group-item'>
               <strong>Usuario:</strong> " . $row['USERNAME'] . "<br>
-                " . $row['COMENTARIO'] . "
-              <a href='eliminar_comentario.php?id=" . $row['ID_COMENTARIO'] . "' class='btn btn-danger btn-sm'>Eliminar</a>
-              <a href='editar_comentario.php?id=" . $row['ID_COMENTARIO'] . "' class='btn btn-secondary btn-sm'>Editar</a>
-          </li>";
+                " . $row['COMENTARIO'];
+            if ($_SESSION['id_rol'] == 2) {
+                echo "<br>
+                <a href='eliminar_comentario.php?id=" . $row['ID_COMENTARIO'] . "' class='btn btn-danger btn-sm'>Eliminar</a>
+                </li>";
+            }
         }
         echo "</ul>";
 
