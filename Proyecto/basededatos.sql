@@ -165,15 +165,29 @@ CREATE OR REPLACE PROCEDURE agregar_tour (
     p_Tipo IN VARCHAR2
 )
 AS
+    v_count NUMBER;
+    v_tipo tour.tipo%TYPE;
+    CURSOR tour_cursor IS
+        SELECT tipo
+        FROM tour
+        WHERE tipo = p_Tipo;
 BEGIN
-    INSERT INTO tour (Tipo)
-    VALUES (p_Tipo);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Tour agregado exitosamente');
+    OPEN tour_cursor;
+    FETCH tour_cursor INTO v_tipo;
+    IF tour_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('El tour ya existe');
+    ELSE
+        INSERT INTO tour (tipo)
+        VALUES (p_Tipo);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Tour agregado exitosamente');
+    END IF;
+    CLOSE tour_cursor;
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error al agregar Tour');
+        DBMS_OUTPUT.PUT_LINE('Error al agregar tour');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_tour (
     p_id_tour IN INT,
@@ -224,15 +238,29 @@ CREATE OR REPLACE PROCEDURE agregar_actividad (
     p_nombre_actividad IN VARCHAR2
 )
 AS
+    v_count NUMBER;
+    v_nombre_actividad actividad.nombre_actividad%TYPE;
+    CURSOR actividad_cursor IS
+        SELECT nombre_actividad
+        FROM actividad
+        WHERE nombre_actividad = p_nombre_actividad;
 BEGIN
-    INSERT INTO actividad (nombre_actividad)
-    VALUES (p_nombre_actividad);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Actividad agregada exitosamente');
+    OPEN actividad_cursor;
+    FETCH actividad_cursor INTO v_nombre_actividad;
+    IF actividad_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('La actividad ya existe');
+    ELSE
+        INSERT INTO actividad (nombre_actividad)
+        VALUES (p_nombre_actividad);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Actividad agregada exitosamente');
+    END IF;
+    CLOSE actividad_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al agregar actividad');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_actividad (
     p_id_actividad IN INT,
@@ -270,15 +298,30 @@ CREATE OR REPLACE PROCEDURE agregar_menu (
     p_bebida IN VARCHAR2
 )
 AS
+    v_count NUMBER;
+    v_comida menu.comida%TYPE;
+    v_bebida menu.bebida%TYPE;
+    CURSOR menu_cursor IS
+        SELECT comida, bebida
+        FROM menu
+        WHERE comida = p_comida AND bebida = p_bebida;
 BEGIN
-    INSERT INTO menu (comida, bebida)
-    VALUES (p_comida, p_bebida);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Menu agregado exitosamente');
+    OPEN menu_cursor;
+    FETCH menu_cursor INTO v_comida, v_bebida;
+    IF menu_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('El menú ya existe');
+    ELSE
+        INSERT INTO menu (comida, bebida)
+        VALUES (p_comida, p_bebida);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Menú agregado exitosamente');
+    END IF;
+    CLOSE menu_cursor;
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error al agregar menu');
+        DBMS_OUTPUT.PUT_LINE('Error al agregar menú');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_menu (
     p_id_menu IN INT,
@@ -364,15 +407,29 @@ CREATE OR REPLACE PROCEDURE agregar_provincia (
     p_provincia IN VARCHAR2
 )
 AS
+    v_count NUMBER;
+    v_provincia provincia.provincia%TYPE;
+    CURSOR provincia_cursor IS
+        SELECT provincia
+        FROM provincia
+        WHERE provincia = p_provincia;
 BEGIN
-    INSERT INTO provincia (provincia)
-    VALUES (p_provincia);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Provincia agregada exitosamente');
+    OPEN provincia_cursor;
+    FETCH provincia_cursor INTO v_provincia;
+    IF provincia_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('La provincia ya existe');
+    ELSE
+        INSERT INTO provincia (provincia)
+        VALUES (p_provincia);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Provincia agregada exitosamente');
+    END IF;
+    CLOSE provincia_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al agregar provincia');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_provincia (
     p_id_provincia IN INT,
@@ -464,15 +521,36 @@ CREATE OR REPLACE PROCEDURE agregar_paquete (
     p_precio IN INT
 )
 AS
+    v_count NUMBER;
+    v_id_paquete paquetes.ID_Paquete%TYPE;
+    CURSOR paquete_cursor IS
+        SELECT ID_Paquete
+        FROM paquetes
+        WHERE ID_Provincia = p_id_provincia
+        AND ID_Menu = p_id_menu
+        AND ID_Tour = p_id_tour
+        AND ID_Actividad = p_id_actividad
+        AND ID_ls = p_id_ls
+        AND Destino = p_destino
+        AND Fecha = p_fecha
+        AND Precio = p_precio;
 BEGIN
-    INSERT INTO paquetes (ID_Provincia, ID_Menu, ID_Tour, ID_Actividad, ID_ls, Destino, Fecha, Precio)
-    VALUES (p_id_provincia, p_id_menu, p_id_tour, p_id_actividad, p_id_ls, p_destino, p_fecha, p_precio);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Paquete agregada exitosamente');
+    OPEN paquete_cursor;
+    FETCH paquete_cursor INTO v_id_paquete;
+    IF paquete_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('El paquete ya existe');
+    ELSE
+        INSERT INTO paquetes (ID_Provincia, ID_Menu, ID_Tour, ID_Actividad, ID_ls, Destino, Fecha, Precio)
+        VALUES (p_id_provincia, p_id_menu, p_id_tour, p_id_actividad, p_id_ls, p_destino, p_fecha, p_precio);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Paquete agregado exitosamente');
+    END IF;
+    CLOSE paquete_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al agregar paquete');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_paquete (
     p_id_paquete IN INT,
@@ -571,15 +649,29 @@ CREATE OR REPLACE PROCEDURE agregar_rol (
     p_rol IN VARCHAR2
 )
 AS
+    v_count NUMBER;
+    v_rol rol.rol%TYPE;
+    CURSOR rol_cursor IS
+        SELECT rol
+        FROM rol
+        WHERE rol = p_rol;
 BEGIN
-    INSERT INTO rol (rol)
-    VALUES (p_rol);
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Rol agregada exitosamente');
+    OPEN rol_cursor;
+    FETCH rol_cursor INTO v_rol;
+    IF rol_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('El rol ya existe');
+    ELSE
+        INSERT INTO rol (rol)
+        VALUES (p_rol);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Rol agregado exitosamente');
+    END IF;
+    CLOSE rol_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al agregar rol');
 END;
+/
 
 CREATE OR REPLACE PROCEDURE editar_rol (
     p_id_rol IN INT,
@@ -717,15 +809,19 @@ END USUARIOS;
 
 --7 Actividades disponibles
 CREATE OR REPLACE FUNCTION NUMERO_ACTIVIDADES RETURN INT IS
-VAR_NUM_ACTIVIDADES INT := 0;
+    VAR_NUM_ACTIVIDADES INT := 0;
+    CURSOR actividad_cursor IS
+        SELECT COUNT(*) AS total_actividades
+        FROM ACTIVIDAD;
 BEGIN
-SELECT COUNT(*)
-INTO VAR_NUM_ACTIVIDADES
-FROM ACTIVIDAD;
-RETURN VAR_NUM_ACTIVIDADES;
-EXCEPTION WHEN OTHERS THEN 
-DBMS_OUTPUT.PUT_LINE('Error al contar el número de actividades disponibles: ' || SQLERRM);
-RETURN NULL;
+    OPEN actividad_cursor;
+    FETCH actividad_cursor INTO VAR_NUM_ACTIVIDADES;
+    CLOSE actividad_cursor;
+    RETURN VAR_NUM_ACTIVIDADES;
+EXCEPTION
+    WHEN OTHERS THEN 
+        DBMS_OUTPUT.PUT_LINE('Error al contar el número de actividades disponibles: ' || SQLERRM);
+        RETURN NULL;
 END NUMERO_ACTIVIDADES;
 
 --8 Total gastado por un usuario
