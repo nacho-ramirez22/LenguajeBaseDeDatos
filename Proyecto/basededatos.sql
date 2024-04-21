@@ -191,15 +191,27 @@ END;
 
 CREATE OR REPLACE PROCEDURE editar_tour (
     p_id_tour IN INT,
-    p_Tipo IN VARCHAR2
+    p_tipo IN VARCHAR2
 )
 AS
+    v_count INT;
+    CURSOR tour_cursor IS
+        SELECT COUNT(*) AS cantidad
+        FROM tour
+        WHERE id_tour = p_id_tour;
 BEGIN
-    UPDATE tour 
-    SET tipo = p_Tipo
-    WHERE id_tour = p_id_tour;
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Tour editado exitosamente');
+    OPEN tour_cursor;
+    FETCH tour_cursor INTO v_count;
+    IF v_count > 0 THEN
+        UPDATE tour 
+        SET tipo = p_tipo
+        WHERE id_tour = p_id_tour;
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Tour editado exitosamente');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('El tour con ID ' || p_id_tour || ' no existe');
+    END IF;
+    CLOSE tour_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al editar Tour');
@@ -267,12 +279,24 @@ CREATE OR REPLACE PROCEDURE editar_actividad (
     p_nombre_actividad IN VARCHAR2
 )
 AS
+    v_count INT;
+    CURSOR actividad_cursor IS
+        SELECT COUNT(*) AS cantidad
+        FROM actividad
+        WHERE id_actividad = p_id_actividad;
 BEGIN
-    UPDATE actividad 
-    SET nombre_actividad = p_nombre_actividad
-    WHERE id_actividad = p_id_actividad;
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Actividad editada exitosamente');
+    OPEN actividad_cursor;
+    FETCH actividad_cursor INTO v_count;
+    IF v_count > 0 THEN
+        UPDATE actividad 
+        SET nombre_actividad = p_nombre_actividad
+        WHERE id_actividad = p_id_actividad;
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Actividad editada exitosamente');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('La actividad con ID ' || p_id_actividad || ' no existe');
+    END IF;
+    CLOSE actividad_cursor;
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error al editar actividad');
