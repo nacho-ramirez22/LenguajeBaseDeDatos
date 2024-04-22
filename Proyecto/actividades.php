@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Actividades</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -69,6 +69,20 @@
         </nav>
     </header>
     <div class="container mt-5">
+
+        <h2>Obtener Actividad</h2>
+        <form action="actividad_funcion.php" method="post">
+            <div class="mb-3">
+                <label for="id_actividad" class="form-label">ID Actividad:</label>
+                <input type="text" class="form-control" id="id_actividad" name="id_actividad">
+            </div>
+            <button type="submit" class="btn btn-primary">Obtener Actividad</button>
+        </form><br>
+        <div class="container mt-5">
+            <form action="cantidadActividades.php" method="POST">
+                <button type="submit" class="btn btn-primary">Actividades</button>
+            </form><br>
+        </div>
         <?php
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 

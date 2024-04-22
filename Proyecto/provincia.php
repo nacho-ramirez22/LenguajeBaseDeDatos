@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Provincia</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -69,6 +69,14 @@
         </nav>
     </header>
     <div class="container mt-5">
+        <h2>Obtener provincia</h2>
+        <form action="provincia_funcion.php" method="post">
+            <div class="mb-3">
+                <label for="id_provincia" class="form-label">ID Provincia:</label>
+                <input type="text" class="form-control" id="id_provincia" name="id_provincia">
+            </div>
+            <button type="submit" class="btn btn-primary">Obtener Provincia</button>
+        </form><br>
         <?php
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 

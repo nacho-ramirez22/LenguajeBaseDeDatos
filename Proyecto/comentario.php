@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Comentarios</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -67,6 +67,15 @@
         </nav>
     </header>
     <div class="container mt-5">
+        </form><br>
+        <h2>Cantidad de comentarios</h2>
+        <form action="funcion_comentarios.php" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario:</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <button type="submit" class="btn btn-primary">Cantidad de Comentarios</button>
+        </form><br>
         <?php
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 
@@ -82,7 +91,7 @@
 
         oci_execute($statement);
 
-        echo "<h2>TIPOS DE TOURS:</h2>";
+        echo "<h2>COMENTARIOS:</h2>";
         echo "<ul class='list-group'>";
         while ($row = oci_fetch_assoc($statement)) {
             echo "<li class='list-group-item'>
@@ -99,6 +108,8 @@
         oci_free_statement($statement);
         oci_close($conn);
         ?>
+        <div class="container mt-5">
+        </div>
         <div class="row">
             <div class="col-12 text-center">
                 <h2>Agregar Comentario</h2>

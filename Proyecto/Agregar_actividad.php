@@ -17,7 +17,7 @@ oci_bind_by_name($statement, ":actividad", $actividad);
 $result = oci_execute($statement);
 
 if ($result) {
-    echo '<script>alert("Actividad registrada correctamente"); window.location.href = "actividades.php";</script>';
+    header("Location: actividades.php");
     exit;
 } else {
     $m = oci_error($statement);

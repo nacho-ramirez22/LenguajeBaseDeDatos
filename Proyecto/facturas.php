@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Facturas</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -70,6 +70,7 @@
     </header>
     <div class="container mt-5">
         <?php
+        echo "<a href='totalGastado.php?id_usuario=" . $_SESSION['id_usuario'] . "' class='btn btn-success btn-sm'>TOTAL GASTADO</a></li>";
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 
         if (!$conn) {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Lugares de Salida</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -68,7 +68,16 @@
             </div>
         </nav>
     </header>
+
     <div class="container mt-5">
+        <h2>Obtener Lugar de Salida</h2>
+        <form action="ls_funcion.php" method="post">
+            <div class="mb-3">
+                <label for="id_lugar_salida" class="form-label">ID Lugar de Salida:</label>
+                <input type="text" class="form-control" id="id_lugar_salida" name="id_lugar_salida">
+            </div>
+            <button type="submit" class="btn btn-primary">Obtener Lugar de Salida</button>
+        </form><br>
         <?php
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 

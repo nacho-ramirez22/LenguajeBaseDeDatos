@@ -19,7 +19,7 @@ oci_bind_by_name($statement, ":LugarSalida", $LugarSalida);
 $result = oci_execute($statement);
 
 if ($result) {
-    echo '<script>alert("Lugar de salida registrado correctamente"); window.location.href = "lugarSalida.php";</script>';
+    header("Location: lugarSalida.php");
     exit;
 } else {
     $m = oci_error($statement);

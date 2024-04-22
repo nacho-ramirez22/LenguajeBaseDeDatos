@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Tour</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -69,6 +69,11 @@
         </nav>
     </header>
     <div class="container mt-5">
+        <div class="container mt-5">
+            <form action="cantidadTours.php" method="POST">
+                <button type="submit" class="btn btn-primary">Tours</button>
+            </form><br>
+        </div>
         <?php
         $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
 

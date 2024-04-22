@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paquetes</title>
+    <title>Auditoria</title>
     <link rel="stylesheet" href="css/stylesIndex.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
@@ -108,6 +108,40 @@
         oci_free_statement($statement);
         oci_close($conn);
         ?>
+
+        <?php
+        $conn = oci_connect("ESTEBAN", "12345", "localhost/orcl");
+
+        if (!$conn) {
+            $m = oci_error();
+            echo $m['message'], "\n";
+            exit;
+        }
+
+        $query = 'SELECT * FROM vista_rol';
+
+        $statement = oci_parse($conn, $query);
+
+        oci_execute($statement);
+
+        echo "<h2>Usuarios Administradores:</h2>";
+        echo "<ul class='list-group'>";
+        while ($row = oci_fetch_assoc($statement)) {
+            echo "<li class='list-group-item'>";
+            echo "<b>Usuario:</b> " . $row['USUARIO'] . " ";
+            echo "<b>Rol:</b> " . $row['ROL'] . "   ";
+            echo "</li>";
+        }
+        echo "</ul>";
+
+        oci_free_statement($statement);
+        oci_close($conn);
+        ?>
+        <div class="container mt-5">
+            <form action="cantidadUsuarios.php" method="POST">
+                <button type="submit" class="btn btn-primary">Ver cantidad Usuarios</button>
+            </form><br>
+        </div>
         <script>
             function mostrarDetalles(button) {
                 var detalles = button.nextElementSibling;

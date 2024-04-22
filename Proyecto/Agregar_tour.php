@@ -17,7 +17,7 @@ oci_bind_by_name($statement, ":tipo", $tipo);
 $result = oci_execute($statement);
 
 if ($result) {
-    echo '<script>alert("Tour registrado correctamente"); window.location.href = "tour.php";</script>';
+    header("Location: tour.php");
     exit;
 } else {
     $m = oci_error($statement);

@@ -20,7 +20,7 @@ oci_bind_by_name($statement, ":bebida", $bebida);
 $result = oci_execute($statement);
 
 if ($result) {
-    echo '<script>alert("Menu registrado correctamente"); window.location.href = "menu.php";</script>';
+    header("Location: menu.php");
     exit;
 } else {
     $m = oci_error($statement);

@@ -25,7 +25,8 @@ oci_bind_by_name($statement, ":tour", $tour);
 oci_bind_by_name($statement, ":actividad", $actividad);
 oci_bind_by_name($statement, ":lugarSalida", $lugarSalida);
 oci_bind_by_name($statement, ":destino", $destino);
-oci_bind_by_name($statement, ":fecha", date('d-M-Y', strtotime($fecha)));
+$fecha_format = date('d-M-Y', strtotime($fecha));
+oci_bind_by_name($statement, ":fecha", $fecha_format);
 oci_bind_by_name($statement, ":precio", $precio);
 
 $result = oci_execute($statement);

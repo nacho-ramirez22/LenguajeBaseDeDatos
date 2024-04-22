@@ -17,7 +17,7 @@ oci_bind_by_name($statement, ":provincia", $provincia);
 $result = oci_execute($statement);
 
 if ($result) {
-    echo '<script>alert("Provincia registrada correctamente"); window.location.href = "provincia.php";</script>';
+    header("Location: provincia.php");
     exit;
 } else {
     $m = oci_error($statement);
